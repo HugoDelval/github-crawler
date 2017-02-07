@@ -1,2 +1,3 @@
 .idea/
-__pycache__/
+master/__pycache__/
+slave/__pycache__/
