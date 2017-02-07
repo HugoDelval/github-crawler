@@ -4,6 +4,8 @@ import requests
 import json
 import logging
 
+from flask import request
+
 app = Flask(__name__)
 logging.getLogger().setLevel(logging.INFO)
 
@@ -13,10 +15,17 @@ slave_token = "None"
 master_url = "http://{master_ip}:5000/{endpoint}"
 REGISTER = "register"
 
+github_url = "https://api.github.com/{endpoint}"
 
-@app.route('/get_user', methods=["POST"])
-def hello_world():
-    return jsonify({"user": 'Hello World! ' + slave_token})
+
+@app.route('/users', methods=["POST"])
+def get_users():
+    page = request.args.get("page", 1)
+    per_page = request.args.get("per_page", 20)
+    url = github_url.format(endpoint=("users?page=" + page + "&per_page=" + per_page))
+    logging.info("Request Github API: " + url)
+    github_resp = requests.get(url)
+    return jsonify({"users": json.loads(github_resp.text)})
 
 
 def register_to_master():

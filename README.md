@@ -29,7 +29,7 @@ docker run -i -p ${master_ip}:5000:5000 hugodelval/github-crawler-master
 ```
 
 The master will ask you to enter a Github username and an authentication token (from [https://github.com/settings/tokens](github.com/settings/tokens)).
-The wanted string looks like ```HugoDelval:a5e855f84fa3bca2```. This Oauth token is used to access th Github API.
+The wanted string looks like ```HugoDelval:a5e855f84fa3bca2```. This Oauth token is used to access the Github API.
 
 ### Security note
 
