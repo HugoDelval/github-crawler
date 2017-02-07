@@ -64,11 +64,19 @@ The master node keep in memory all the slaves that has been linked to him. At ea
 
 The master node exposes a *REST API* which allows one to request and crawl github repositories and users.
 
-* /
-
-    Return the list of all the available entry points with a short description
-* /users?nb=nb_users_to_show
+* /users?nb=<nb_users_to_show>
     
     Return a list of the last signed up users
     
-    nb_users_to_show: integer, the number of users to show
+    *nb_users_to_show*: integer, the number of users to show
+
+* /contributors?user=<the_user>&depth=<wanted_depth>
+
+    Return a list of users. We check all the repositories of <the_user> and look for all the contributors in these repositories. We repeat the process for each contributors a number <depth> times. This output the **close_contributors** of <the_user>
+    
+    *the_user*: string, login of the user you want to know the close contributors
+    
+    *depth*: how far do we check for contributors
+    
+    **Note** An output of this request is provided in the *output/* folder. This output has been generated in 3min using 3 slaves.
+    
