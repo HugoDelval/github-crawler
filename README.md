@@ -1,4 +1,6 @@
-Distributed Github crawler based on Python, Docker and https://developer.github.com/v3/
+# Distributed Github crawler 
+
+Based on Python Flask, Docker and https://developer.github.com/v3/
 
 
 ## Master node
