@@ -9,10 +9,11 @@ Based on Python Flask, Docker and https://developer.github.com/v3/
 cd master
 ```
 
-Build the master node
+Build and push the master node (for developers)
 
 ```bash
 docker build -t hugodelval/github-crawler-master .
+docker push hugodelval/github-crawler-master
 ```
 
 Then, let's choose an IP address for the master.
@@ -27,6 +28,13 @@ Run the master node
 docker run -i -p ${master_ip}:5000:5000 hugodelval/github-crawler-master
 ```
 
+The master will ask you to enter a Github username and an authentication token (from [https://github.com/settings/tokens](github.com/settings/tokens)).
+The wanted string looks like ```HugoDelval:a5e855f84fa3bca2```. This Oauth token is used to access th Github API.
+
+### Security note
+
+Note that for now the previously entered Oauth token is passed from the master to the slaves via HTTP (and not HTTPs). So the application is not safe to use in a public cloud environment.
+
 
 ## Slave node
 
@@ -34,10 +42,11 @@ docker run -i -p ${master_ip}:5000:5000 hugodelval/github-crawler-master
 cd slave
 ```
 
-Build the slave node
+Build and push the slave node (for developers)
 
 ```bash
 docker build -t hugodelval/github-crawler-slave .
+docker push hugodelval/github-crawler-slave
 ```
 
 Run some slaves nodes
@@ -53,7 +62,7 @@ The master node keep in memory all the slaves that has been linked to him. At ea
 
 ## The API
 
-The master node exposes a REST API which allows one to request and crawl github repositories and users.
+The master node exposes a *REST API* which allows one to request and crawl github repositories and users.
 
 * /
 

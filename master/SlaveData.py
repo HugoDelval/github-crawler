@@ -1,5 +1,4 @@
 class SlaveData:
-    def __init__(self, ip, token, port):
+    def __init__(self, ip, port):
         self.ip = ip
         self.port = port
-        self.token = token

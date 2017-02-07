@@ -10,15 +10,12 @@ import logging
 
 app = Flask(__name__)
 logging.getLogger().setLevel(logging.DEBUG)
+passwd = "username:access_token_from_https://github.com/settings/tokens"
 
-slaves = [SlaveData("192.168.0.2", "false slave", 5001)]  # to show error handling -> the first request will
-                                                             # eliminate  the inactive slave
+slaves = [SlaveData("192.168.0.2", 5001)]  # to show error handling -> the first request will
+                                           # eliminate  the inactive slave
 slave_url = "http://{slave_ip}:{port}/{endpoint}"
 GET_USER = "get_user"
-
-
-def get_random_str(N):
-    return ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(N))
 
 
 def slave_exception_handler(slave_request, exc):
@@ -32,10 +29,9 @@ def slave_exception_handler(slave_request, exc):
 def register():
     content = request.get_json()
     slave_ip = request.remote_addr
-    generated_token = get_random_str(20)
     logging.info("Registering slave with IP: " + slave_ip)
-    slaves.append(SlaveData(slave_ip, generated_token, content.get("port", 5001)))
-    return jsonify({"token": generated_token})
+    slaves.append(SlaveData(slave_ip, content.get("port", 5001)))
+    return jsonify({"token": passwd})
 
 
 @app.route('/sample', methods=["GET"])
@@ -48,4 +44,9 @@ def get_users():
 
 
 if __name__ == '__main__':
+    import getpass
+    passwd = getpass.getpass("Please paste your username and your OAuth access token (from "
+                             "https://github.com/settings/tokens) in the form username:token, "
+                             "e.g. : 'HugoDelval:a5e855f84fa3bca2' : "
+                             )
     app.run("0.0.0.0", 5000)

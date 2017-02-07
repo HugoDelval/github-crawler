@@ -9,14 +9,14 @@ logging.getLogger().setLevel(logging.INFO)
 
 master_ip = "127.0.0.1"
 slave_port = 5001
+slave_token = "None"
 master_url = "http://{master_ip}:5000/{endpoint}"
 REGISTER = "register"
-slave_token = "None"
 
 
 @app.route('/get_user', methods=["POST"])
 def hello_world():
-    return jsonify({"user": 'Hello World!'})
+    return jsonify({"user": 'Hello World! ' + slave_token})
 
 
 def register_to_master():
